@@ -116,6 +116,7 @@ func ContainerManager() string {
 }
 
 func GetHostImage() (img string, err error) {
+	fmt.Println("Host image", img)
 	if settings.Cnf.Image != "" {
 		return settings.Cnf.Image, nil
 	}
@@ -131,11 +132,16 @@ func GetHostImage() (img string, err error) {
 		return "", err
 	}
 	release := strings.ToLower(strings.Trim(string(release_raw), "\r\n"))
-	
+
+	fmt.Println("distro", distro, "release", release);
+
 	// kinetic containers are not supported anymore, use latest instead
 	if distro == "ubuntu" && release == "22.10" {
 		release = "latest"
 	}
+
+	fmt.Println("distro==ubuntu", distro == "ubuntu", "release==22.10", release == "22.10");
+	fmt.Println("newrelease", release)
 
 	return fmt.Sprintf("%v:%v", distro, release), nil
 }
