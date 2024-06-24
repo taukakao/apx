@@ -131,6 +131,11 @@ func GetHostImage() (img string, err error) {
 		return "", err
 	}
 	release := strings.ToLower(strings.Trim(string(release_raw), "\r\n"))
+	
+	// kinetic containers are not supported anymore, use latest instead
+	if distro == "ubuntu" && release == "22.10" {
+		release = "latest"
+	}
 
 	return fmt.Sprintf("%v:%v", distro, release), nil
 }
